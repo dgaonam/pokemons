@@ -13,14 +13,15 @@ function App() {
   const [recordsPerPage] = useState(50);
 
   const obtenPokemones = () => {
-    axiosClient.get('/api/v2/pokemon?offset=' + (currentPage * recordsPerPage) + '&limit=' + recordsPerPage)
+    axiosClient.get('/api/v2/pokemon?offset=' + ( (currentPage-1) * recordsPerPage) + '&limit=' + recordsPerPage)
       .then(res => {
-        setPaginas(Math.ceil(res.data.count / recordsPerPage));
+        setPaginas((Math.ceil(res.data.count / recordsPerPage))-1);
         setPokemons(res.data.results);
       });
   };
 
   useEffect(() => {
+    console.log(currentPage);
     obtenPokemones();
   }, []);
 
@@ -40,19 +41,20 @@ function App() {
   }
 
   const siguientePagina = () => {
-    if (currentPage !== paginas) {
+    if (currentPage <= paginas) {
       setCurrentPage(currentPage + 1)
       console.log(currentPage);
+    }else{
+      console.log("llegaste a la ultima pagina");
     }
   }
   const anteriorPagina = () => {
-    if (currentPage !== 1) {
+    if (currentPage > 1) {
       setCurrentPage(currentPage - 1)
       console.log(currentPage);
+    }else{
+      console.log("llegaste a la primer pagina");
     }
-  }
-  const selectPagina = () => {
-    console.log(currentPage);
   }
 
   const pageNumbers = [...Array(paginas + 1).keys()].slice(1)
