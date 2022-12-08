@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+  calculadora:
+    container_name: pokemon
+    image: node:16
+    build:
+      context: ./
+    volumes:
+      - ./:/frontend
+    working_dir: /frontend
+    ports:
+      - 3000:3000
+    stdin_open: true
+    command: npm start
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - pokemon-network
+
+networks:
+  pokemon-network:
+    external: true

@@ -1,0 +1,8 @@
+FROM node:16
+WORKDIR /pokemon
+COPY ./ ./frontend
+RUN node -v
+RUN npm install webpack webpack-cli -g
+RUN npm install html-webpack-plugin -g
+RUN  rm -rf node_modules && npm install --legacy-peer-deps
+EXPOSE 3000
